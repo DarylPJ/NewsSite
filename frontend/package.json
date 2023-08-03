@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run copy:redirects && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "copy:redirects": "node -e \"const fs = require('fs'); const data = fs.readFileSync('_redirects'); fs.writeFileSync('.next/_redirect', data);\""
   },
   "dependencies": {
     "eslint": "8.46.0",
