@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npm run copy:redirects && next build",
+    "build": " next build && npm run copy:redirects",
     "start": "next start",
     "lint": "next lint",
     "copy:redirects": "node -e \"const fs = require('fs'); const data = fs.readFileSync('_redirects'); fs.writeFileSync('.next/_redirect', data);\""
