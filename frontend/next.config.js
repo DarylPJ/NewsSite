@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   async rewrites() {
-    console.log("Rewrites called");
     return [
       {
         source: "/api",
