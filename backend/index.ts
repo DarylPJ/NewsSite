@@ -1,13 +1,18 @@
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
+import cors from 'cors';
 
 dotenv.config();
 
 const app: Express = express();
 const port = process.env["PORT"];
 
+app.use(cors({
+  origin: 'https://worldwidenews24.netlify.app'
+}));
+
 app.get('/api', (_: Request, res: Response) => {
-  res.send('Hello World');
+  res.json('Hello World');
 });
 
 app.listen(port, () => {
