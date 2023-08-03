@@ -11,7 +11,7 @@ const indexParams: Map<string, string> = new Map([
 
 
 export function buildIndexRequest(queryParams: Request['query']): URL {
-  const token = process.env["Token"];
+  const token = process.env["TOKEN"];
 
   if (!token) {
     throw new Error("Cannot find news api token");
