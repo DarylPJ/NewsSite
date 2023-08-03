@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import news from './routers/news-router.js';
+import health from './routers/health-router.js';
 
 dotenv.config();
 
@@ -13,6 +14,7 @@ app.use(cors({
 }));
 
 app.use(news);
+app.use(health);
 
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
