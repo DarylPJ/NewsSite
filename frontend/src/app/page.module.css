@@ -8,7 +8,25 @@
   border-bottom: 1px solid lightgray;
 }
 
-.page-container {
+.main {
   max-width: 1400px;
   margin: auto;
+}
+
+.header {
+  margin: 0 10px;
+}
+
+.header > div {
+  margin-top: 10px;
+}
+
+.flex-item {
+  flex:1;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  gap: 5px
 }

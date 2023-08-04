@@ -10,6 +10,12 @@
     "copy:redirects": "node -e \"const fs = require('fs'); const data = fs.readFileSync('_redirects'); fs.writeFileSync('.next/_redirects', data);\""
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.14.3",
+    "@mui/material": "^5.14.3",
+    "@mui/x-date-pickers": "^6.11.0",
+    "dayjs": "^1.11.9",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.12",
     "next": "13.4.12",
