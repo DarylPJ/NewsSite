@@ -3,7 +3,7 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: "/api",
+        source: "/api/news",
         destination: "http://localhost:3001/",
       },
     ];
