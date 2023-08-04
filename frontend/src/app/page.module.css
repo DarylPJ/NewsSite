@@ -1,3 +1,20 @@
 .main {
   padding: 10px;
 }
+
+.grid-container {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1400px;
+}
+
+.grid-item {
+  min-width: 300px;
+  max-width: 600px;
+  flex: 1;
+}
+
+.page-container {
+  display: flex;
+  justify-content: center;
+}
