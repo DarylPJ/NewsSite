@@ -1,7 +1,9 @@
 .container {
   display: flex;
   flex-direction: column;
-  padding: 5px;
+  padding: 10px;
+  justify-content: space-between;
+  flex: 1;
 }
 
 .title {
@@ -24,4 +26,10 @@
   object-fit: cover;
   height: 150px;
   overflow: hidden;
+}
+
+.footer {
+  padding-top: 5px;
+  display: flex;
+  justify-content: space-between;
 }

@@ -26,8 +26,10 @@ export function NewsCard(props: INewsProps) {
         </a>
       </h4>
       <div className={styles["description"]}>{props.description}</div>
-      <div>{dateString}</div>
-      <div>{props.sourceName}</div>
+      <div className={styles["footer"]}>
+        <div>{dateString}</div>
+        <div>{props.sourceName}</div>
+      </div>
     </div>
   );
 }
