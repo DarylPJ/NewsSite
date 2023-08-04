@@ -30,3 +30,15 @@
   flex-direction: row;
   gap: 5px
 }
+
+.header-container {
+  display: flex;
+  flex-direction: row;
+  gap: 5px
+}
+
+@media (max-width: 650px)  {
+  .header-container {
+    flex-direction: column;
+  }
+}

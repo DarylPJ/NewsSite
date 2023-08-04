@@ -59,6 +59,26 @@ export default function Home() {
     setData(text);
   }
 
+  function renderSortBy() {
+    return (
+      <div className={`${styles["flex-item"]} ${styles["flex-container"]}`}>
+        <div className={`${styles["flex-item"]} ${styles["flex-container"]}`}>
+          <FormControl fullWidth size="small">
+            <InputLabel>Sort By</InputLabel>
+            <Select value={"pubishedAt"} label="Sort By">
+              <MenuItem value="title">Title</MenuItem>
+              <MenuItem value="author">Author</MenuItem>
+              <MenuItem value="pubishedAt">PubishedAt</MenuItem>
+            </Select>
+          </FormControl>
+        </div>
+        <IconButton size="small">
+          <ArrowUpwardIcon />
+        </IconButton>
+      </div>
+    );
+  }
+
   function renderHeader() {
     return (
       <div className={styles["header"]}>
@@ -76,7 +96,7 @@ export default function Home() {
             <ClearIcon />
           </IconButton>
         </div>
-        <div className={styles["flex-container"]}>
+        <div className={styles["header-container"]}>
           <DateTimePicker
             label="From"
             slotProps={{ textField: { size: "small" } }}
@@ -85,19 +105,8 @@ export default function Home() {
             label="To"
             slotProps={{ textField: { size: "small" } }}
           />
-          <div className={styles["flex-item"]}>
-            <FormControl fullWidth size="small">
-              <InputLabel>Sort By</InputLabel>
-              <Select value={"pubishedAt"} label="Sort By">
-                <MenuItem value="title">Title</MenuItem>
-                <MenuItem value="author">Author</MenuItem>
-                <MenuItem value="pubishedAt">PubishedAt</MenuItem>
-              </Select>
-            </FormControl>
-          </div>
-          <IconButton size="small">
-            <ArrowUpwardIcon />
-          </IconButton>
+          {renderSortBy()}
+          <div className={styles["flex-container"]}></div>
         </div>
       </div>
     );
