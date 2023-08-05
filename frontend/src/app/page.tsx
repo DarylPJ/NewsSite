@@ -101,8 +101,6 @@ export default function Home() {
 
   function renderArticles() {
     if (!articles.length) {
-      const spinnerClass = !showSpinner ? styles["hidden"] : "";
-
       return (
         <div className={styles["no-results-container"]}>
           <h2>No results found</h2>
@@ -118,9 +116,7 @@ export default function Home() {
               Clear Filters
             </Button>
           </div>
-          <div>
-            <CircularProgress className={spinnerClass ?? ""} />
-          </div>
+          <div>{showSpinner ? <CircularProgress /> : ""}</div>
         </div>
       );
     }
