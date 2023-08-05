@@ -12,3 +12,8 @@
   max-width: 1400px;
   margin: auto;
 }
+
+.loading-title {
+  justify-content: center;
+  display: flex;
+}

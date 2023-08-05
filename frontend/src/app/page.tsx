@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import _debounce from "lodash.debounce";
 import { NewsCard } from "@/components/news-card";
 import { IHeaderSettings, SearchForm } from "@/components/search-form";
-import { useMediaQuery } from "@mui/material";
+import { LinearProgress, useMediaQuery } from "@mui/material";
 
 interface ISource {
   Id: string | null;
@@ -47,7 +47,10 @@ function selectQueryParameters(filters: IHeaderSettings): string[] {
 export default function Home() {
   const [articles, setArticles] = useState<IArticle[]>([]);
   const [filters, setFilters] = useState<IHeaderSettings>();
+  const [isFirstLoad, setFirstLoad] = useState(true);
+
   const filtersRef = useRef(filters);
+  const setFirstLoadRef = useRef(setFirstLoad);
 
   useEffect(() => {
     filtersRef.current = filters;
@@ -67,12 +70,18 @@ export default function Home() {
 
     const text = (await result.json()) as IArticle[];
     setArticles(text);
+    setFirstLoadRef.current(false);
   }
 
   const isSmallScreen = useMediaQuery("(max-width:700px)");
 
-  if (!articles.length) {
-    return <main>Loading...!</main>;
+  if (isFirstLoad) {
+    return (
+      <main className={styles["main"]}>
+        <h2 className={styles["loading-title"]}>Loading...</h2>
+        <LinearProgress />
+      </main>
+    );
   }
 
   return (
