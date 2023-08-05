@@ -1,3 +1,5 @@
+import { Request } from "express";
+
 interface ISource {
   Id: string | null,
   Name: string
@@ -13,13 +15,14 @@ interface IArticle {
   description: string
 }
 
-const validSorts: ReadonlyArray<string> = ['title', 'author', 'pubishedAt'];
+const validSorts: ReadonlyArray<string> = ['title', 'author', 'publishedAt'];
 
-export default function newsIndex(url: URL): IArticle[] {
-  const search = url.searchParams.get('q');
-  const from = url.searchParams.get('from');
-  const to = url.searchParams.get('to');
-  const sort = url.searchParams.get('sortBy');
+export default function newsIndex(queryParams: Request['query']): IArticle[] {
+  const search = queryParams['search'] as string | undefined;
+  const from = queryParams['from'] as string | undefined;
+  const to = queryParams['to'] as string | undefined;
+  const sort = queryParams['sortBy'] as string | undefined;
+  const sortDirection = queryParams['sortDirection'] as string | undefined;
 
   const fromDate = tryParseDate(from);
   const toDate = tryParseDate(to);
@@ -58,7 +61,7 @@ export default function newsIndex(url: URL): IArticle[] {
         return 0;
       }
       
-      return firstValue.localeCompare(secondValue);
+      return sortDirection === 'asc'?secondValue.localeCompare(firstValue): firstValue.localeCompare(secondValue);
     });
   }
 
@@ -92,7 +95,7 @@ function matchesDate(article:IArticle, to?: Date, from?: Date): boolean {
   return matches;
 }
 
-function tryParseDate(dateString: string | null): Date | undefined {
+function tryParseDate(dateString: string | undefined): Date | undefined {
   if(!dateString) {
     return undefined;
   }

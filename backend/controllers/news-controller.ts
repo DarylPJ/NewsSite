@@ -15,7 +15,7 @@ export async function index(req: Request, res: Response): Promise<void> {
   //   res.status(504).send("Error connecting to required external services.");
   // }
 
-  const results = newsIndex(url);
+  const results = newsIndex(req.query);
 
   res.json(results);
 };

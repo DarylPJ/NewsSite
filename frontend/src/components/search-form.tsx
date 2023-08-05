@@ -5,7 +5,7 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import ClearIcon from "@mui/icons-material/Clear";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import {
   FormControl,
@@ -19,7 +19,7 @@ export interface IHeaderSettings {
   search: string;
   from: Date | null;
   to: Date | null;
-  sortBy: "title" | "author" | "pubishedAt";
+  sortBy: "title" | "author" | "publishedAt";
   sortDirection: "asc" | "dsc";
 }
 
@@ -28,9 +28,9 @@ interface ISearchFormSettings {
   mode: "horizontal" | "vertical";
 }
 
-function defaultHeaderSettings(): IHeaderSettings {
+export function defaultHeaderSettings(): IHeaderSettings {
   return {
-    sortBy: "pubishedAt",
+    sortBy: "publishedAt",
     sortDirection: "dsc",
     search: "",
     from: null,
@@ -43,7 +43,14 @@ export function SearchForm(props: ISearchFormSettings) {
     defaultHeaderSettings()
   );
 
+  const firstUpdate = useRef(true);
+
   useEffect(() => {
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+      return;
+    }
+
     props.onSettingsChange(settings);
   }, [settings]);
 
@@ -54,13 +61,13 @@ export function SearchForm(props: ISearchFormSettings) {
   }
 
   function handleSortByClicked(
-    event: SelectChangeEvent<"title" | "author" | "pubishedAt">
+    event: SelectChangeEvent<"title" | "author" | "publishedAt">
   ) {
     const value = event.target.value;
 
     let { sortBy } = defaultHeaderSettings();
 
-    if (value === "title" || value === "author" || value === "pubishedAt") {
+    if (value === "title" || value === "author" || value === "publishedAt") {
       sortBy = value;
     }
 
@@ -87,7 +94,7 @@ export function SearchForm(props: ISearchFormSettings) {
             >
               <MenuItem value="title">Title</MenuItem>
               <MenuItem value="author">Author</MenuItem>
-              <MenuItem value="pubishedAt">PubishedAt</MenuItem>
+              <MenuItem value="publishedAt">published Date</MenuItem>
             </Select>
           </FormControl>
         </div>

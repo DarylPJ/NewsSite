@@ -6,6 +6,7 @@
 .grid-item {
   display: flex;
   border-bottom: 1px solid lightgray;
+  max-width: 600px;
 }
 
 .main {

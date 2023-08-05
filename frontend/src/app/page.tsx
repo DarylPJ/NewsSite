@@ -4,7 +4,11 @@ import styles from "./page.module.css";
 import { useCallback, useEffect, useRef, useState } from "react";
 import _debounce from "lodash.debounce";
 import { NewsCard } from "@/components/news-card";
-import { IHeaderSettings, SearchForm } from "@/components/search-form";
+import {
+  IHeaderSettings,
+  SearchForm,
+  defaultHeaderSettings,
+} from "@/components/search-form";
 import { LinearProgress, useMediaQuery } from "@mui/material";
 
 interface ISource {
@@ -46,7 +50,9 @@ function selectQueryParameters(filters: IHeaderSettings): string[] {
 
 export default function Home() {
   const [articles, setArticles] = useState<IArticle[]>([]);
-  const [filters, setFilters] = useState<IHeaderSettings>();
+  const [filters, setFilters] = useState<IHeaderSettings>(
+    defaultHeaderSettings()
+  );
   const [isFirstLoad, setFirstLoad] = useState(true);
 
   const filtersRef = useRef(filters);
