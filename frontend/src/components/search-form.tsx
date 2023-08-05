@@ -1,11 +1,8 @@
-"use client";
-
 import styles from "./search-form.module.css";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import ClearIcon from "@mui/icons-material/Clear";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-import { useEffect, useRef, useState } from "react";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import {
   FormControl,
@@ -24,6 +21,7 @@ export interface IHeaderSettings {
 }
 
 interface ISearchFormSettings {
+  settings: IHeaderSettings;
   onSettingsChange: (settings: IHeaderSettings) => void;
   mode: "horizontal" | "vertical";
 }
@@ -39,25 +37,14 @@ export function defaultHeaderSettings(): IHeaderSettings {
 }
 
 export function SearchForm(props: ISearchFormSettings) {
-  const [settings, setSettings] = useState<IHeaderSettings>(
-    defaultHeaderSettings()
-  );
-
-  const firstUpdate = useRef(true);
-
-  useEffect(() => {
-    if (firstUpdate.current) {
-      firstUpdate.current = false;
-      return;
-    }
-
-    props.onSettingsChange(settings);
-  }, [settings]);
-
   function handleSortDirectionClicked() {
-    const newSortDirection = settings.sortDirection === "asc" ? "dsc" : "asc";
+    const newSortDirection =
+      props.settings.sortDirection === "asc" ? "dsc" : "asc";
 
-    setSettings({ ...settings, sortDirection: newSortDirection });
+    props.onSettingsChange({
+      ...props.settings,
+      sortDirection: newSortDirection,
+    });
   }
 
   function handleSortByClicked(
@@ -71,12 +58,12 @@ export function SearchForm(props: ISearchFormSettings) {
       sortBy = value;
     }
 
-    return setSettings({ ...settings, sortBy });
+    return props.onSettingsChange({ ...props.settings, sortBy });
   }
 
   function renderSortBy() {
     const arrow =
-      settings.sortDirection === "asc" ? (
+      props.settings.sortDirection === "asc" ? (
         <ArrowUpwardIcon />
       ) : (
         <ArrowDownwardIcon />
@@ -88,7 +75,7 @@ export function SearchForm(props: ISearchFormSettings) {
           <FormControl fullWidth size="small">
             <InputLabel>Sort By</InputLabel>
             <Select
-              value={settings.sortBy}
+              value={props.settings.sortBy}
               label="Sort By"
               onChange={handleSortByClicked}
             >
@@ -115,15 +102,18 @@ export function SearchForm(props: ISearchFormSettings) {
             variant="outlined"
             fullWidth
             size="small"
-            value={settings.search}
+            value={props.settings.search}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              setSettings({ ...settings, search: event.target.value });
+              props.onSettingsChange({
+                ...props.settings,
+                search: event.target.value,
+              });
             }}
           />
         </div>
         <IconButton
           size="small"
-          onClick={() => setSettings(defaultHeaderSettings())}
+          onClick={() => props.onSettingsChange(defaultHeaderSettings())}
         >
           <ClearIcon />
         </IconButton>
@@ -136,14 +126,18 @@ export function SearchForm(props: ISearchFormSettings) {
         <DateTimePicker
           label="From"
           slotProps={{ textField: { size: "small" } }}
-          value={settings.from}
-          onChange={(newValue) => setSettings({ ...settings, from: newValue })}
+          value={props.settings.from}
+          onChange={(newValue) =>
+            props.onSettingsChange({ ...props.settings, from: newValue })
+          }
         />
         <DateTimePicker
           label="To"
           slotProps={{ textField: { size: "small" } }}
-          value={settings.to}
-          onChange={(newValue) => setSettings({ ...settings, to: newValue })}
+          value={props.settings.to}
+          onChange={(newValue) =>
+            props.onSettingsChange({ ...props.settings, to: newValue })
+          }
         />
         {renderSortBy()}
       </div>

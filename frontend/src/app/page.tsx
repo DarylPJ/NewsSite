@@ -9,7 +9,13 @@ import {
   SearchForm,
   defaultHeaderSettings,
 } from "@/components/search-form";
-import { LinearProgress, useMediaQuery } from "@mui/material";
+import {
+  Button,
+  CircularProgress,
+  LinearProgress,
+  useMediaQuery,
+} from "@mui/material";
+import ClearIcon from "@mui/icons-material/Clear";
 
 interface ISource {
   Id: string | null;
@@ -54,9 +60,11 @@ export default function Home() {
     defaultHeaderSettings()
   );
   const [isFirstLoad, setFirstLoad] = useState(true);
+  const [showSpinner, setShowSpinner] = useState(false);
 
   const filtersRef = useRef(filters);
   const setFirstLoadRef = useRef(setFirstLoad);
+  const setShowSpinnerRef = useRef(setShowSpinner);
 
   useEffect(() => {
     filtersRef.current = filters;
@@ -77,6 +85,7 @@ export default function Home() {
     const text = (await result.json()) as IArticle[];
     setArticles(text);
     setFirstLoadRef.current(false);
+    setShowSpinnerRef.current(false);
   }
 
   const isSmallScreen = useMediaQuery("(max-width:700px)");
@@ -90,27 +99,55 @@ export default function Home() {
     );
   }
 
+  function renderArticles() {
+    if (!articles.length) {
+      const spinnerClass = !showSpinner ? styles["hidden"] : "";
+
+      return (
+        <div className={styles["no-results-container"]}>
+          <h2>No results found</h2>
+          <div>
+            <Button
+              variant="outlined"
+              onClick={() => {
+                setShowSpinner(true);
+                setFilters(defaultHeaderSettings());
+              }}
+              endIcon={<ClearIcon />}
+            >
+              Clear Filters
+            </Button>
+          </div>
+          <div>
+            <CircularProgress className={spinnerClass ?? ""} />
+          </div>
+        </div>
+      );
+    }
+
+    return articles.map((article, index) => (
+      <div key={`item-${index}`} className={styles["grid-item"]}>
+        <NewsCard
+          key={`news-{index}`}
+          title={article.title}
+          sourceName={article.source?.Name ?? ""}
+          description={article.description}
+          image={article.urlToImage}
+          url={article.url}
+          published={article.publishedAt}
+        />
+      </div>
+    ));
+  }
+
   return (
     <main className={styles["main"]}>
       <SearchForm
+        settings={filters}
         onSettingsChange={(settings: IHeaderSettings) => setFilters(settings)}
         mode={isSmallScreen ? "vertical" : "horizontal"}
       />
-      <div className={styles["grid-container"]}>
-        {articles.map((article, index) => (
-          <div key={`item-${index}`} className={styles["grid-item"]}>
-            <NewsCard
-              key={`news-{index}`}
-              title={article.title}
-              sourceName={article.source?.Name ?? ""}
-              description={article.description}
-              image={article.urlToImage}
-              url={article.url}
-              published={article.publishedAt}
-            />
-          </div>
-        ))}
-      </div>
+      <div className={styles["grid-container"]}>{renderArticles()}</div>
     </main>
   );
 }
