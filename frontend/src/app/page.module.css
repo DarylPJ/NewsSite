@@ -12,34 +12,3 @@
   max-width: 1400px;
   margin: auto;
 }
-
-.header {
-  margin: 0 10px;
-}
-
-.header > div {
-  margin-top: 10px;
-}
-
-.flex-item {
-  flex:1;
-}
-
-.flex-container {
-  display: flex;
-  flex-direction: row;
-  gap: 5px
-}
-
-.header-container {
-  display: flex;
-  flex-direction: row;
-  gap: 5px
-}
-
-@media (max-width: 650px)  {
-  .header-container {
-    flex-direction: column;
-    gap:10px;
-  }
-}
