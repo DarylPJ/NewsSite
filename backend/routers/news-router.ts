@@ -1,8 +1,8 @@
 import { Router } from "express";
-import * as news from '../controllers/news-controller.js';
+import * as newsController from '../controllers/news-controller.js';
 
 const app = Router();
 
-app.get('/', news.index);
+app.get('/', newsController.index);
 
 export default app;
