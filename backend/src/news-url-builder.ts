@@ -6,7 +6,7 @@ const indexParams: Map<string, string> = new Map([
   ['search', 'q'],
   ['from', 'from'],
   ['to', 'to'],
-  ['sort', 'sortBy']
+  ['sortBy', 'sortBy']
 ]);
 
 

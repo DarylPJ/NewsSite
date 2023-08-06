@@ -5,7 +5,7 @@ interface ISource {
   Name: string
 }
 
-interface IArticle {
+export interface IArticle {
   title: string,
   author: string | null, 
   source: ISource | null,

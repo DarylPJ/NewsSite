@@ -16,6 +16,10 @@ app.use(cors({
 app.use(news);
 app.use(health);
 
-app.listen(port, () => {
-  console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
-});
+if (process.env['NODE_ENV'] !== 'test') {
+  app.listen(port, () => {
+    console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
+  });
+}
+
+export default app;
